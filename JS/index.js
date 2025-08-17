@@ -33,7 +33,12 @@ const addBookmark = (url) => {
 
 document.getElementById('addBtn').addEventListener("click", () => {
     const url = document.getElementById('inputUrl').value;
-    addBookmark(url)
+    if(isUrlValid(url)) {
+        addBookmark(url)
+    }
+    else {
+        alert("Wrong URL!!!")
+    }
 })
 
 const deleteByQuerySelector = (item) => {
@@ -54,4 +59,10 @@ const updateUrl = (item) => {
         const newUrl = prompt("Edit the URL:", url.innerHTML)
         url.innerHTML = newUrl
     })
+}
+
+function isUrlValid(url) {
+    const pattern =
+        /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/;
+    return pattern.test(url);
 }
