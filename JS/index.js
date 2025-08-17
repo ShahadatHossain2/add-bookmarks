@@ -1,45 +1,57 @@
-const addBookmark = (url, i) => {
+const addBookmark = (url) => {
     const container = document.getElementById('bookMarkContainer');
     const div = document.createElement('div')
     div.classList.add('w-9/12', 'mx-auto')
-    const id = `item${i}`
-    div.id = id
+    // const id = `item${i}`
+    // div.id = id
     div.innerHTML = `
    <div class="flex p-2 mt-1 border rounded justify-between">
    <div>
-   <p id="urlText">${url}</p>
+   <p class="url" id="urlText">${url}</p>
    </div>
    <div>
-   <button onClick = "updateUrl('${url}')" class="btn btn-accent">Edit</button>
-   <button onClick = "deleteUrl('${id}')" class="btn btn-error">Delete</button>
+   <button class="update btn btn-accent">Edit</button>
+   <button class="delete btn btn-error">Delete</button>
    </div>
    </div>
    `
+// Delete way - 1
+//    <button onClick = "deleteUrl('${id}')" class="btn btn-error">Delete</button>
     container.appendChild(div)
+    deleteByQuerySelector(div)
+    updateUrl(div)
     document.getElementById('inputUrl').value = ""
 }
-let counter = 1;
+
+// Delete Way - 1
+// let counter = 1;
+// document.getElementById('addBtn').addEventListener("click", () => {
+//     const url = document.getElementById('inputUrl').value;
+//     addBookmark(url, counter)
+//     counter++;
+// })
+
 document.getElementById('addBtn').addEventListener("click", () => {
     const url = document.getElementById('inputUrl').value;
-    addBookmark(url, counter)
-    counter++;
+    addBookmark(url)
 })
 
-// const deleteSingleUrl = () => {
-//     document.getElementById('bookMarkContainer').addEventListener('click', (event)=> {
-//         event.target.parentNode.removeChild(event.target)
-//     })
-// }
+const deleteByQuerySelector = (item) => {
+    item.querySelector('.delete').addEventListener('click', (event)=> {
+        item.remove()
+    })
+}
 
 const deleteUrl = (containerId) => {
-    console.log(containerId)
         document.getElementById(containerId).innerHTML = ""
 }
 
-const updateUrl = (url) => {
-    document.getElementById('editBox').value = url
-    document.getElementById('my_modal_5').showModal()
-    document.getElementById('updateButton').addEventListener('click', () => {
-        document.getElementById('urlText').innerText = document.getElementById('editBox').value
+const updateUrl = (item) => {
+    const url = item.querySelector('.url')
+    const updateBtn = item.querySelector('.update')
+
+    updateBtn.addEventListener('click', () => {
+        const newUrl = prompt("Edit the URL:", url.innerHTML)
+        url.innerHTML = newUrl
     })
 }
