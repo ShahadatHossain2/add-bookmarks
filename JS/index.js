@@ -5,7 +5,7 @@ const addBookmark = (url) => {
     // const id = `item${i}`
     // div.id = id
     div.innerHTML = `
-   <div class="flex p-2 mt-1 border rounded justify-between">
+   <div class="lg:flex md:flex md:w-full sm:w-full overflow-hidden p-2 mt-1 border rounded justify-between">
    <div>
    <p class="url" id="urlText">${url}</p>
    </div>
