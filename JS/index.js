@@ -15,12 +15,14 @@ const addBookmark = (url) => {
    </div>
    </div>
    `
-// Delete way - 1
-//    <button onClick = "deleteUrl('${id}')" class="btn btn-error">Delete</button>
+    // Delete way - 1
+    //    <button onClick = "deleteUrl('${id}')" class="btn btn-error">Delete</button>
+    
     container.appendChild(div)
+    document.getElementById('inputUrl').value = ""
     deleteByQuerySelector(div)
     updateUrl(div)
-    document.getElementById('inputUrl').value = ""
+    
 }
 
 // Delete Way - 1
@@ -33,7 +35,7 @@ const addBookmark = (url) => {
 
 document.getElementById('addBtn').addEventListener("click", () => {
     const url = document.getElementById('inputUrl').value;
-    if(isUrlValid(url)) {
+    if (isUrlValid(url)) {
         addBookmark(url)
     }
     else {
@@ -42,22 +44,35 @@ document.getElementById('addBtn').addEventListener("click", () => {
 })
 
 const deleteByQuerySelector = (item) => {
-    item.querySelector('.delete').addEventListener('click', (event)=> {
+    item.querySelector('.delete').addEventListener('click', (event) => {
         item.remove()
     })
 }
 
 const deleteUrl = (containerId) => {
-        document.getElementById(containerId).innerHTML = ""
+    // way - 1
+    // document.getElementById(containerId).innerHTML = ""
+
+    // way-2
+    const parent = document.getElementById(containerId)
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild)
+    }
 }
 
 const updateUrl = (item) => {
     const url = item.querySelector('.url')
     const updateBtn = item.querySelector('.update')
+    console.log(url, updateBtn)
 
     updateBtn.addEventListener('click', () => {
-        const newUrl = prompt("Edit the URL:", url.innerHTML)
-        url.innerHTML = newUrl
+        let newUrl = prompt("Edit the URL:", url.innerHTML)
+        if (isUrlValid(newUrl)) {
+            url.innerHTML = newUrl
+        }
+        else {
+            alert("Wrong URL!!!")
+        }
     })
 }
 
